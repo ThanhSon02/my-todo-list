@@ -1,4 +1,8 @@
+import './Header.css';
+import { useState } from 'react';
 function Header() {
+    const [checked, setChecked] = useState(true);
+
     return (
         <div>
             <div className='flex justify-between px-8 pt-6 pb-9 items-center'>
@@ -38,8 +42,16 @@ function Header() {
                     </div>
                 </div>
             </div>
-            <div>
-                <input type='checkbox' />
+
+            <div className='switch-wrapper flex justify-between items-center w-74.5 h-10 my-0 mx-auto bg-switchBtnBg rounded text-center p-1 relative'>
+                <input id='switch' type='checkbox' name='switch' onChange={() => setChecked(!checked)} />
+                <label className='text-base font-semibold w-33.25 h-8 leading-8 z-10 cursor-pointer' htmlFor='switch'>
+                    Schedule
+                </label>
+                <label className='text-base font-semibold w-33.25 h-8 leading-8 z-10 cursor-pointer' htmlFor='switch'>
+                    Note
+                </label>
+                <span className='highlighter bg-switchBtn rounded absolute w-33.25 h-8 left-1 top-1'></span>
             </div>
         </div>
     );

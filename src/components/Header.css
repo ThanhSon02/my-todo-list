@@ -1,0 +1,17 @@
+input[type="checkbox"] {
+    display: none;
+}
+
+
+input[type="checkbox"] ~ label[for="switch"] ~ .highlighter {
+    transform: none;
+}
+
+input[type="checkbox"]:checked ~ label[for="switch"] ~ .highlighter {
+    transform: translateX(calc(100% + 24px));
+}
+
+.switch-wrapper .highlighter {
+    transition: transform 0.25s ease-in-out;
+}
+
