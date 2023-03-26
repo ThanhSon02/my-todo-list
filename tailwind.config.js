@@ -21,6 +21,9 @@ module.exports = {
                 74.5: '298px',
                 33.25: '133px',
             },
+            borderRadius: {
+                circle: '50%',
+            },
         },
     },
     plugins: [],
