@@ -1,4 +1,4 @@
-input[type="checkbox"] {
+.switch-wrapper input[type="checkbox"] {
     display: none;
 }
 

@@ -1,13 +1,13 @@
-import { Timeline } from 'antd';
 import Calendar from '../../components/Calendar';
 import Header from '../../components/Header';
+import ScheduleTimeLine from '../../components/ScheduleTimeLine';
 
 function SchedulePage() {
     return (
-        <main className='bg-startBg h-screen text-white'>
+        <main className='bg-scheduleBg text-white'>
             <Header />
             <Calendar />
-            <Timeline />
+            <ScheduleTimeLine />
         </main>
     );
 }
