@@ -26,6 +26,9 @@ module.exports = {
                 66: '264px',
                 1: '4px',
             },
+            height: {
+                line: '2px',
+            },
             borderRadius: {
                 circle: '50%',
             },

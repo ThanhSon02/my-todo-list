@@ -10,7 +10,7 @@ import {
     isSunday,
     isSameMonth,
     add,
-    isEqual,
+    isSameDay,
 } from 'date-fns';
 import { AiOutlineRight, AiOutlineLeft } from 'react-icons/ai';
 import { useState } from 'react';
@@ -19,7 +19,7 @@ const classNames = (...classes) => {
     return classes.filter(Boolean).join(' ');
 };
 
-function Calendar() {
+function Calendar({ datas }) {
     const today = startOfToday();
     const [selectedDay, setselectedDay] = useState(today);
     const [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'));
@@ -41,7 +41,6 @@ function Calendar() {
         console.log(firstDayNextMonth);
         setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
     };
-    console.log(format(selectedDay, 'dd MMMM yyyy'));
 
     return (
         <div className='p-10'>
@@ -69,17 +68,20 @@ function Calendar() {
                 <div className='grid grid-cols-7 grid-rows-6 justify-items-center text-white'>
                     {days.map((day, index) => (
                         <div
+                            key={index}
                             className={classNames(
                                 isToday(day) && 'bg-today text-today',
                                 isSunday(day) && isSameMonth(day, firstDayOfCurrentMonth) && 'text-highLight',
                                 !isSameMonth(day, firstDayOfCurrentMonth) && 'text-notSameMonth',
-                                isEqual(day, selectedDay) &&
-                                    'before:block before:absolute before:bottom-1 before:border-b-white before:border-b-2 before:w-8 before:left-1 before:right-1',
+
                                 'font-semibold w-10 h-10 rounded-circle text-center leading-10 hover:bg-slate-50 hover:text-black relative',
                             )}
                             onClick={() => setselectedDay(day)}
                         >
                             {format(day, 'd')}
+                            {datas.some((date) => isSameDay(date.date, day)) && (
+                                <div className='absolute bottom-1 w-10 h-line bg-white'></div>
+                            )}
                         </div>
                     ))}
                 </div>

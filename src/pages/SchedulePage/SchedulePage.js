@@ -1,13 +1,17 @@
 import Calendar from '../../components/Calendar';
 import Header from '../../components/Header';
 import ScheduleTimeLine from '../../components/ScheduleTimeLine';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 function SchedulePage() {
+    const scheduleList = useSelector((state) => state.schedule);
+    const [datas, setDatas] = useState(scheduleList);
     return (
-        <main className='bg-scheduleBg text-white'>
+        <main className='bg-scheduleBg min-h-screen text-white'>
             <Header />
-            <Calendar />
-            <ScheduleTimeLine />
+            <Calendar datas={datas} />
+            <ScheduleTimeLine datas={datas} />
         </main>
     );
 }
