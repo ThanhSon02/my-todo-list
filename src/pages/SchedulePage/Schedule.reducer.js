@@ -16,12 +16,12 @@ const initialState = [
                 time: '07.00 am - 08.00 am',
                 place: 'Anomali Office',
                 note: 'Nothing',
-                checked: true,
+                checked: false,
             },
         ],
     },
     {
-        date: new Date(2023, 2, 20),
+        date: new Date(2023, 2, 22),
         scheduleItem: [
             {
                 title: 'Metting',
@@ -40,7 +40,7 @@ const initialState = [
                 time: '07.00 am - 08.00 am',
                 place: 'Anomali Office',
                 note: 'Nothing',
-                checked: true,
+                checked: false,
             },
         ],
     },

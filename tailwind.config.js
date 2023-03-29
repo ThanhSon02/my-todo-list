@@ -19,6 +19,7 @@ module.exports = {
                 today: '#7E64FF',
                 dotBg: '#3C1F7B',
                 line: '#7E64FF',
+                done: '#241641',
             },
             width: {
                 74.5: '298px',

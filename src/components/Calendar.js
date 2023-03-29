@@ -11,6 +11,7 @@ import {
     isSameMonth,
     add,
     isSameDay,
+    getMonth,
 } from 'date-fns';
 import { AiOutlineRight, AiOutlineLeft } from 'react-icons/ai';
 import { useState } from 'react';
@@ -21,7 +22,7 @@ const classNames = (...classes) => {
 
 function Calendar({ datas }) {
     const today = startOfToday();
-    const [selectedDay, setselectedDay] = useState(today);
+    const [monthFocus, setMonthFocus] = useState(getMonth(today));
     const [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'));
     const firstDayOfCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
 
@@ -41,6 +42,8 @@ function Calendar({ datas }) {
         console.log(firstDayNextMonth);
         setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
     };
+
+    console.log(monthFocus);
 
     return (
         <div className='p-10'>
@@ -70,15 +73,20 @@ function Calendar({ datas }) {
                         <div
                             key={index}
                             className={classNames(
-                                isToday(day) && 'bg-today text-today',
                                 isSunday(day) && isSameMonth(day, firstDayOfCurrentMonth) && 'text-highLight',
                                 !isSameMonth(day, firstDayOfCurrentMonth) && 'text-notSameMonth',
 
-                                'font-semibold w-10 h-10 rounded-circle text-center leading-10 hover:bg-slate-50 hover:text-black relative',
+                                'font-semibold w-11 h-11 flex justify-center items-center relative',
                             )}
-                            onClick={() => setselectedDay(day)}
                         >
-                            {format(day, 'd')}
+                            <span
+                                className={classNames(
+                                    isToday(day) && 'bg-today text-today',
+                                    'block w-8 h-8 rounded-circle text-center leading-8 hover:bg-slate-50 hover:text-black',
+                                )}
+                            >
+                                {format(day, 'd')}
+                            </span>
                             {datas.some((date) => isSameDay(date.date, day)) && (
                                 <div className='absolute bottom-1 w-10 h-line bg-white'></div>
                             )}
