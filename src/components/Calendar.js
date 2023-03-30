@@ -1,6 +1,5 @@
 import {
     format,
-    startOfToday,
     parse,
     eachDayOfInterval,
     endOfMonth,
@@ -11,21 +10,14 @@ import {
     isSameMonth,
     add,
     isSameDay,
-    getMonth,
 } from 'date-fns';
 import { AiOutlineRight, AiOutlineLeft } from 'react-icons/ai';
-import { useState } from 'react';
 
 const classNames = (...classes) => {
     return classes.filter(Boolean).join(' ');
 };
 
-function Calendar({ datas }) {
-    const today = startOfToday();
-    const [monthFocus, setMonthFocus] = useState(getMonth(today));
-    const [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'));
-    const firstDayOfCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
-
+function Calendar({ datas, today, currentMonth, setCurrentMonth, firstDayOfCurrentMonth }) {
     const days = eachDayOfInterval({
         start: startOfWeek(firstDayOfCurrentMonth),
         end: endOfWeek(endOfMonth(firstDayOfCurrentMonth)),
@@ -33,17 +25,13 @@ function Calendar({ datas }) {
 
     const handlePreviousMonth = () => {
         let firstDayNextMonth = add(firstDayOfCurrentMonth, { months: -1 });
-        console.log(firstDayNextMonth);
         setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
     };
 
     const handleNextMonth = () => {
         let firstDayNextMonth = add(firstDayOfCurrentMonth, { months: 1 });
-        console.log(firstDayNextMonth);
         setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
     };
-
-    console.log(monthFocus);
 
     return (
         <div className='p-10'>
@@ -87,7 +75,7 @@ function Calendar({ datas }) {
                             >
                                 {format(day, 'd')}
                             </span>
-                            {datas.some((date) => isSameDay(date.date, day)) && (
+                            {datas.some((date) => isSameDay(date.startDate, day)) && (
                                 <div className='absolute bottom-1 w-10 h-line bg-white'></div>
                             )}
                         </div>

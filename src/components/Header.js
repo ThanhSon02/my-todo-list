@@ -1,8 +1,5 @@
 import './Header.css';
-import { useState } from 'react';
-function Header() {
-    const [checked, setChecked] = useState(true);
-
+function Header({ checked, setChecked }) {
     return (
         <div>
             <div className='flex justify-between px-8 pt-6 pb-9 items-center'>
