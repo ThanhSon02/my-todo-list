@@ -42,10 +42,16 @@ function Header({ checked, setChecked }) {
 
             <div className='switch-wrapper flex justify-between items-center w-74.5 h-10 my-0 mx-auto bg-switchBtnBg rounded text-center p-1 relative'>
                 <input id='switch' type='checkbox' name='switch' onChange={() => setChecked(!checked)} />
-                <label className='text-base font-semibold w-33.25 h-8 leading-8 z-10 cursor-pointer' htmlFor='switch'>
+                <label
+                    className='select-none text-base font-semibold w-33.25 h-8 leading-8 z-10 cursor-pointer focus:outline-none'
+                    htmlFor='switch'
+                >
                     Schedule
                 </label>
-                <label className='text-base font-semibold w-33.25 h-8 leading-8 z-10 cursor-pointer' htmlFor='switch'>
+                <label
+                    className='select-none text-base font-semibold w-33.25 h-8 leading-8 z-10 cursor-pointer focus:outline-none'
+                    htmlFor='switch'
+                >
                     Note
                 </label>
                 <span className='highlighter bg-switchBtn rounded absolute w-33.25 h-8 left-1 top-1'></span>

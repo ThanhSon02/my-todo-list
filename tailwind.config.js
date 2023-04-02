@@ -8,6 +8,7 @@ module.exports = {
                 highLight: '#FF636C',
                 today: '#060011',
                 notSameMonth: '#7E7E7E',
+                placeHolder: '#828282',
             },
             backgroundImage: {
                 startBg: 'linear-gradient(15deg,#2A2C2E,#2B125A,#000)',
@@ -20,6 +21,7 @@ module.exports = {
                 dotBg: '#3C1F7B',
                 line: '#7E64FF',
                 done: '#241641',
+                searchBg: '#CCC2FE',
             },
             width: {
                 74.5: '298px',

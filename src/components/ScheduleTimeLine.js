@@ -1,15 +1,12 @@
-import { createAction } from '@reduxjs/toolkit';
-import { format, isSameDay } from 'date-fns';
-import { useDispatch } from 'react-redux';
-import { closeScheduleItem } from '../pages/SchedulePage/Schedule.reducer';
-function ScheduleTimeLine({ datas }) {
+import { format, isSameDay, isSameMonth, parseISO } from 'date-fns';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeScheduleItem } from '../pages/SchedulePage/ScheduleReducer';
+function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
+    const scheduleList = useSelector((state) => state.schedule);
     const dispatch = useDispatch();
-    const handleChecked = (e) => {
-        dispatch(closeScheduleItem({}));
-    };
-
-    console.log(datas);
-
+    let datas = scheduleList.filter((scheduleItem) =>
+        isSameMonth(firstDayOfCurrentMonth, parseISO(scheduleItem.startDate)),
+    );
     return (
         <div className='ml-2 px-5'>
             <h1 className='mb-8 font-bold'>Schedule</h1>
@@ -17,13 +14,13 @@ function ScheduleTimeLine({ datas }) {
                 <div>
                     {datas.map((data, index) => (
                         <div key={index} className='flex relative'>
-                            {!isSameDay(data.startDate, datas[index - 1]?.startDate) ? (
+                            {!isSameDay(parseISO(data.startDate), parseISO(datas[index - 1]?.startDate)) ? (
                                 <div
                                     className={
                                         'absolute flex justify-center items-center w-8 h-8 rounded-circle bg-dotBg border-round border-2 text-white text-center leading-8 left-1'
                                     }
                                 >
-                                    {format(data.startDate, 'd')}
+                                    {format(parseISO(data.startDate), 'd')}
                                 </div>
                             ) : (
                                 <></>
@@ -33,16 +30,23 @@ function ScheduleTimeLine({ datas }) {
                                     <div className='w-2 h-32 bg-today'></div>
                                     <div
                                         className={`flex-auto ${
-                                            data.done ? 'bg-done' : 'bg-dotBg'
+                                            data.done ? 'bg-done accent-indigo-800' : 'bg-dotBg'
                                         } px-3 py-2 rounded-lg mb-3`}
                                     >
                                         <div className='flex relative justify-between before:block before:absolute before:top-6 before:left-0 before:right-0 before:border-line before:border-b-lineColorActive '>
-                                            <h3>Meeting</h3>
+                                            <h3>Meeting {data.id}</h3>
                                             <input
                                                 type='checkbox'
                                                 checked={data.done}
-                                                value={data}
-                                                onChange={(e) => handleChecked(e)}
+                                                value={data.id}
+                                                onChange={(e) =>
+                                                    dispatch(
+                                                        closeScheduleItem({
+                                                            id: Number(e.target.value),
+                                                            done: e.target.checked,
+                                                        }),
+                                                    )
+                                                }
                                             />
                                         </div>
                                         <div className='flex gap-3 mt-3'>
@@ -53,9 +57,9 @@ function ScheduleTimeLine({ datas }) {
                                             </div>
                                             <div className='flex-1 text-left text-xs leading-5'>
                                                 <p>
-                                                    {format(data.startDate, 'h.mm a') +
+                                                    {format(parseISO(data.startDate), 'h.mm a') +
                                                         ' - ' +
-                                                        format(data.endDate, 'h.mm a')}
+                                                        format(parseISO(data.endDate), 'h.mm a')}
                                                 </p>
                                                 <p>{data.place}</p>
                                                 <p>{data.notes}</p>

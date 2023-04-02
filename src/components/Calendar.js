@@ -1,6 +1,5 @@
 import {
     format,
-    parse,
     eachDayOfInterval,
     endOfMonth,
     startOfWeek,
@@ -10,6 +9,7 @@ import {
     isSameMonth,
     add,
     isSameDay,
+    parseISO,
 } from 'date-fns';
 import { AiOutlineRight, AiOutlineLeft } from 'react-icons/ai';
 
@@ -75,7 +75,7 @@ function Calendar({ datas, today, currentMonth, setCurrentMonth, firstDayOfCurre
                             >
                                 {format(day, 'd')}
                             </span>
-                            {datas.some((date) => isSameDay(date.startDate, day)) && (
+                            {datas.some((date) => isSameDay(parseISO(date.startDate), day)) && (
                                 <div className='absolute bottom-1 w-10 h-line bg-white'></div>
                             )}
                         </div>

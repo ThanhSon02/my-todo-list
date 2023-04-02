@@ -11,10 +11,8 @@ function SchedulePage() {
     const [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'));
     let firstDayOfCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
 
-    let a = datas.filter((data) => isSameMonth(firstDayOfCurrentMonth, data.startDate));
-
     return (
-        <div>
+        <main>
             <Calendar
                 datas={datas}
                 today={today}
@@ -22,8 +20,8 @@ function SchedulePage() {
                 currentMonth={currentMonth}
                 setCurrentMonth={setCurrentMonth}
             />
-            <ScheduleTimeLine datas={a} />
-        </div>
+            <ScheduleTimeLine firstDayOfCurrentMonth={firstDayOfCurrentMonth} />
+        </main>
     );
 }
 
