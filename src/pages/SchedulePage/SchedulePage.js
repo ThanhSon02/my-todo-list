@@ -2,7 +2,7 @@ import Calendar from '../../components/Calendar';
 import ScheduleTimeLine from '../../components/ScheduleTimeLine';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { format, getMonth, isSameMonth, startOfToday, parse } from 'date-fns';
+import { format, startOfToday, parse } from 'date-fns';
 
 function SchedulePage() {
     const today = startOfToday();
