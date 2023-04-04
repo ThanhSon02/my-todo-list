@@ -6,7 +6,7 @@ import CreateModal from './CreateModal';
 
 function LayoutHeader({ children }) {
     const [checked, setChecked] = useState(true);
-    const [showModal, setShowModal] = useState(true);
+    const [showModal, setShowModal] = useState(false);
 
     return (
         <main className='bg-scheduleBg min-h-screen text-white relative'>
@@ -21,7 +21,7 @@ function LayoutHeader({ children }) {
                     <path d='M2 10L18 10' stroke='white' stroke-width='3' stroke-linecap='round' />
                 </svg>
             </div>
-            {showModal && <CreateModal />}
+            {showModal && <CreateModal setShowModal={setShowModal} />}
         </main>
     );
 }

@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import LayoutHeader from './components/LayoutHeader';
+import EditingPage from './pages/EditingPage/EditingPage';
 import Home from './pages/Home';
 import NotePage from './pages/NotePage/NotePage';
 import SchedulePage from './pages/SchedulePage/SchedulePage';
@@ -24,6 +25,7 @@ function App() {
                     </LayoutHeader>
                 }
             />
+            <Route path='/edit' element={<EditingPage />} />
         </Routes>
     );
 }
