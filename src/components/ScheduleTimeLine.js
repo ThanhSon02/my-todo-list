@@ -4,8 +4,9 @@ import { closeScheduleItem } from '../pages/SchedulePage/ScheduleReducer';
 function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
     const scheduleList = useSelector((state) => state.schedule);
     const dispatch = useDispatch();
+
     let datas = scheduleList.filter((scheduleItem) =>
-        isSameMonth(firstDayOfCurrentMonth, parseISO(scheduleItem.startDate)),
+        isSameMonth(firstDayOfCurrentMonth, parseISO(scheduleItem.timeStart)),
     );
     return (
         <div className='ml-2 px-5'>
@@ -14,13 +15,13 @@ function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
                 <div>
                     {datas.map((data, index) => (
                         <div key={index} className='flex relative'>
-                            {!isSameDay(parseISO(data.startDate), parseISO(datas[index - 1]?.startDate)) ? (
+                            {!isSameDay(parseISO(data.timeStart), parseISO(datas[index - 1]?.timeStart)) ? (
                                 <div
                                     className={
                                         'absolute flex justify-center items-center w-8 h-8 rounded-circle bg-dotBg border-round border-2 text-white text-center leading-8 left-1'
                                     }
                                 >
-                                    {format(parseISO(data.startDate), 'd')}
+                                    {format(parseISO(data.timeStart), 'd')}
                                 </div>
                             ) : (
                                 <></>
@@ -34,7 +35,7 @@ function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
                                         } px-3 py-2 rounded-lg mb-3`}
                                     >
                                         <div className='flex relative justify-between before:block before:absolute before:top-6 before:left-0 before:right-0 before:border-line before:border-b-lineColorActive '>
-                                            <h3>Meeting {data.id}</h3>
+                                            <h3>{data.title}</h3>
                                             <input
                                                 type='checkbox'
                                                 checked={data.done}
@@ -42,7 +43,7 @@ function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
                                                 onChange={(e) =>
                                                     dispatch(
                                                         closeScheduleItem({
-                                                            id: Number(e.target.value),
+                                                            id: e.target.value,
                                                             done: e.target.checked,
                                                         }),
                                                     )
@@ -57,9 +58,9 @@ function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
                                             </div>
                                             <div className='flex-1 text-left text-xs leading-5'>
                                                 <p>
-                                                    {format(parseISO(data.startDate), 'h.mm a') +
+                                                    {format(parseISO(data.timeStart), 'h.mm a') +
                                                         ' - ' +
-                                                        format(parseISO(data.endDate), 'h.mm a')}
+                                                        format(parseISO(data.timeFinish), 'h.mm a')}
                                                 </p>
                                                 <p>{data.place}</p>
                                                 <p>{data.notes}</p>

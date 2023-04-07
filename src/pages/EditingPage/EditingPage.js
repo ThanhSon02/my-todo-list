@@ -1,12 +1,49 @@
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { ChevronRight } from '@mui/icons-material';
+import { formatISO, isSameDay } from 'date-fns';
+import { useState, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { addScheduleItem } from '../SchedulePage/ScheduleReducer';
+import { Link, Navigate } from 'react-router-dom';
+import { DateTimePicker } from '@mui/x-date-pickers';
+
+const initialState = {
+    id: '',
+    title: '',
+    timeStart: '',
+    timeFinish: '',
+    place: '',
+    notes: '',
+    done: false,
+};
+
 function EditingPage() {
-    const goBack = () => {
-        window.history.back();
-    };
+    const dispatch = useDispatch();
+
+    const [formData, setFormData] = useState(initialState);
+    const [reDirect, setReDirect] = useState(false);
+    const [timeDefault, setTimeDefault] = useState(null);
+    const [error, setError] = useState(null);
+
+    const errorMessage = useMemo(() => {
+        switch (error) {
+            case 'minTime': {
+                return 'Please select a time greater than start time';
+            }
+
+            default: {
+                return '';
+            }
+        }
+    }, [error]);
+
+    if (reDirect) {
+        return <Navigate to={'/schedule'} />;
+    }
+
     return (
-        <section className='p-6 bg-scheduleBg min-h-screen'>
-            <header className='flex justify-between w-full'>
-                <span onClick={goBack} className='transition ease-in-out hover:-translate-x-1'>
+        <section className='p-6 bg-scheduleBg min-h-screen accent-indigo-800'>
+            <header className='flex justify-between w-full mb-6'>
+                <Link to={'/schedule'} className='transition ease-in-out hover:-translate-x-1'>
                     <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
                         <path
                             fill-rule='evenodd'
@@ -15,10 +52,20 @@ function EditingPage() {
                             fill='white'
                         />
                     </svg>
-                </span>
-                <div className='flex'>
-                    <input type='checkbox' />
-                    <span>
+                </Link>
+                <div className='flex w-16 justify-between'>
+                    <input
+                        type='checkbox'
+                        onChange={(e) => setFormData((prev) => ({ ...prev, done: e.target.checked }))}
+                    />
+                    <button
+                        onClick={() => {
+                            dispatch(addScheduleItem(formData));
+                            setFormData(initialState);
+                            setReDirect(true);
+                        }}
+                        className='transition ease-in-out hover:translate-x-1'
+                    >
                         <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
                             <path
                                 d='M4 12.6667L10.1538 18L20 6'
@@ -27,35 +74,93 @@ function EditingPage() {
                                 stroke-linecap='round'
                             />
                         </svg>
-                    </span>
+                    </button>
                 </div>
             </header>
-            <main>
+            <main className='text-white'>
                 <h2>Schedule</h2>
-                <form>
-                    <input type='text' placeholder='Title' />
-                    <div>
-                        <p>Fullday</p>
-                        <input typeof='checkbox' />
+                <form className='gap-6 flex flex-col mt-6'>
+                    <input
+                        className='bg-[#CCC2FE] rounded w-full h-8 pl-2 px-[5px] placeholder:text-[#4F4F4F]'
+                        type='text'
+                        placeholder='Title'
+                        onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+                    />
+
+                    <div className='flex justify-between items-center'>
+                        <p>Time start</p>
+                        <DateTimePicker
+                            disablePast
+                            ampm={false}
+                            onChange={(value) => {
+                                setFormData((prev) => ({ ...prev, timeStart: formatISO(value) }));
+                                setTimeDefault(value);
+                            }}
+                            slots={{
+                                openPickerIcon: ChevronRight,
+                            }}
+                            sx={{
+                                '& .MuiInputBase-root': {
+                                    color: '#828282',
+                                    fontSize: '12px',
+                                    padding: 0,
+                                },
+                                '& .css-1d3z3hw-MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                                '& .MuiSvgIcon-root': {
+                                    color: '#828282',
+                                },
+                            }}
+                        />
                     </div>
-                    <div>
-                        <p>Start from</p>
-                        <input type='text' />
+
+                    <div className='flex justify-between items-center'>
+                        <p>Time finish</p>
+                        <DateTimePicker
+                            shouldDisableDate={(value) => {
+                                return !isSameDay(value, timeDefault);
+                            }}
+                            minDateTime={timeDefault}
+                            onError={(newError) => setError(newError)}
+                            slotProps={{
+                                textField: {
+                                    helperText: errorMessage,
+                                },
+                            }}
+                            ampm={false}
+                            onChange={(value) => setFormData((prev) => ({ ...prev, timeFinish: formatISO(value) }))}
+                            slots={{
+                                openPickerIcon: ChevronRight,
+                            }}
+                            sx={{
+                                '& .MuiInputBase-root': {
+                                    color: '#828282',
+                                    fontSize: '12px',
+                                    padding: 0,
+                                },
+                                '& .css-1d3z3hw-MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                                '& .MuiSvgIcon-root': {
+                                    color: '#828282',
+                                },
+                            }}
+                        />
                     </div>
-                    <div>
-                        <p>Start from</p>
-                        <input type='text' />
-                    </div>
-                    <div>
-                        <p>Start from</p>
-                        <input type='text' />
-                    </div>
-                    <div>
-                        <p>Start from</p>
-                        <input type='text' />
-                    </div>
-                    <input type='text' placeholder='Place' />
-                    <input type='text' placeholder='Note' />
+
+                    <input
+                        className='bg-[#CCC2FE] rounded w-full h-8 pl-2 px-[5px] placeholder:text-[#4F4F4F]'
+                        type='text'
+                        placeholder='Place'
+                        onChange={(e) => setFormData((prev) => ({ ...prev, place: e.target.value }))}
+                    />
+                    <input
+                        className='bg-[#CCC2FE] rounded w-full h-8 pl-2 px-[5px] placeholder:text-[#4F4F4F]'
+                        type='text'
+                        placeholder='Note'
+                        onChange={(e) => setFormData((prev) => ({ ...prev, notes: e.target.value }))}
+                    />
                 </form>
             </main>
         </section>

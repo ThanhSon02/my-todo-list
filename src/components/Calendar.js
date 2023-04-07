@@ -17,7 +17,7 @@ const classNames = (...classes) => {
     return classes.filter(Boolean).join(' ');
 };
 
-function Calendar({ datas, today, currentMonth, setCurrentMonth, firstDayOfCurrentMonth }) {
+function Calendar({ datas, setCurrentMonth, firstDayOfCurrentMonth }) {
     const days = eachDayOfInterval({
         start: startOfWeek(firstDayOfCurrentMonth),
         end: endOfWeek(endOfMonth(firstDayOfCurrentMonth)),
@@ -70,12 +70,12 @@ function Calendar({ datas, today, currentMonth, setCurrentMonth, firstDayOfCurre
                             <span
                                 className={classNames(
                                     isToday(day) && 'bg-today text-today',
-                                    'block w-8 h-8 rounded-circle text-center leading-8 hover:bg-slate-50 hover:text-black',
+                                    'block w-8 h-8 rounded-circle text-center leading-8 select-none',
                                 )}
                             >
                                 {format(day, 'd')}
                             </span>
-                            {datas.some((date) => isSameDay(parseISO(date.startDate), day)) && (
+                            {datas.some((date) => isSameDay(parseISO(date.timeStart), day)) && (
                                 <div className='absolute bottom-1 w-10 h-line bg-white'></div>
                             )}
                         </div>
