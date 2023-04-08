@@ -7,4 +7,9 @@
 
 html {
     font-family: 'Nunito', sans-serif;
+    
+}
+
+html::-webkit-scrollbar {
+    display: none;
 }

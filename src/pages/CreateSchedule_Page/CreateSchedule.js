@@ -16,7 +16,7 @@ const initialState = {
     done: false,
 };
 
-function EditingPage() {
+function CreateSchedule() {
     const dispatch = useDispatch();
 
     const [formData, setFormData] = useState(initialState);
@@ -167,4 +167,4 @@ function EditingPage() {
     );
 }
 
-export default EditingPage;
+export default CreateSchedule;

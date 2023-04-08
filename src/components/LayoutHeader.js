@@ -3,6 +3,7 @@ import { useState } from 'react';
 import SchedulePage from '../pages/SchedulePage/SchedulePage';
 import NotePage from '../pages/NotePage/NotePage';
 import CreateModal from './CreateModal';
+import { Navigate } from 'react-router-dom';
 
 function LayoutHeader({ children }) {
     const [checked, setChecked] = useState(true);
@@ -11,7 +12,6 @@ function LayoutHeader({ children }) {
     return (
         <main className='bg-scheduleBg min-h-screen text-white relative'>
             <Header checked={checked} setChecked={setChecked} />
-            {checked ? <SchedulePage /> : <NotePage />}
             <div
                 onClick={() => setShowModal(!showModal)}
                 className='flex justify-center items-center fixed bottom-8 right-8 w-12 h-12 bg-today rounded-full'

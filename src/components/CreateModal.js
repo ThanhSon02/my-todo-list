@@ -7,7 +7,7 @@ function CreateModal({ setShowModal }) {
             className='bg-[rgba(8,8,8,0.83)]  fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center z-20'
         >
             <div className='bg-today absolute w-3/5 shadow-lg flex flex-col'>
-                <Link to='/edit' className='flex p-3 gap-4 select-none hover:bg-purple-800'>
+                <Link to='/createNote' className='flex p-3 gap-4 select-none hover:bg-purple-800'>
                     <span>
                         <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
                             <path
@@ -18,7 +18,7 @@ function CreateModal({ setShowModal }) {
                     </span>
                     <h2>New Note</h2>
                 </Link>
-                <div className='flex p-3 gap-4 select-none hover:bg-purple-800'>
+                <Link to='/createSchedule' className='flex p-3 gap-4 select-none hover:bg-purple-800'>
                     <span>
                         <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
                             <path
@@ -28,7 +28,7 @@ function CreateModal({ setShowModal }) {
                         </svg>
                     </span>
                     <h2>New Schedule</h2>
-                </div>
+                </Link>
             </div>
         </div>
     );
