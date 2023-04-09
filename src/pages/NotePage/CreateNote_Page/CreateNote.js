@@ -1,9 +1,34 @@
-import { Link } from 'react-router-dom';
+import { DatePicker } from '@mui/x-date-pickers';
+import { useState } from 'react';
+import formatISO from 'date-fns/formatISO';
+import { useDispatch } from 'react-redux';
+import { addNoteItem } from '../NoteReducer';
+import { Navigate } from 'react-router-dom';
+
+const initialState = {
+    id: '',
+    title: '',
+    date: '',
+    pin: false,
+};
+
 function CreateNote() {
+    const [formData, setFormData] = useState(initialState);
+    const [reDirect, setReDirect] = useState(false);
+    const dispatch = useDispatch();
+
+    const goBack = () => {
+        window.history.back();
+    };
+
+    if (reDirect) {
+        return <Navigate to={'/note'} />;
+    }
+
     return (
         <section className='p-6 bg-[#7E64FF] min-h-screen accent-indigo-800 text-white'>
             <header className='flex justify-between w-full mb-6'>
-                <Link to={'/note'} className='transition ease-in-out hover:-translate-x-1'>
+                <div onClick={goBack} className='transition ease-in-out hover:-translate-x-1'>
                     <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
                         <path
                             fill-rule='evenodd'
@@ -12,7 +37,7 @@ function CreateNote() {
                             fill='white'
                         />
                     </svg>
-                </Link>
+                </div>
                 <div className='flex w-16 justify-between'>
                     <span>
                         <svg width='24' height='24' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -29,7 +54,15 @@ function CreateNote() {
                             </defs>
                         </svg>
                     </span>
-                    <button className='transition ease-in-out hover:translate-x-1'>
+                    <button
+                        onClick={() => {
+                            dispatch(addNoteItem(formData));
+                            setFormData(initialState);
+
+                            setReDirect(true);
+                        }}
+                        className='transition ease-in-out hover:translate-x-1'
+                    >
                         <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
                             <path
                                 d='M4 12.6667L10.1538 18L20 6'
@@ -42,13 +75,35 @@ function CreateNote() {
                 </div>
             </header>
             <main className=''>
-                <h2>Title</h2>
-                <textarea
-                    type='text'
-                    rows={20}
-                    placeholder='Your text'
-                    className='w-full bg-transparent outline-none text-base mt-6 resize-none'
-                />
+                <div>
+                    <h2>Date</h2>
+                    <DatePicker
+                        onChange={(value) => setFormData((prev) => ({ ...prev, date: formatISO(value) }))}
+                        sx={{
+                            '& .MuiInputBase-root': {
+                                color: '#fff',
+                                fontSize: '12px',
+                                padding: 0,
+                            },
+                            '& .css-1d3z3hw-MuiOutlinedInput-notchedOutline': {
+                                border: 'none',
+                            },
+                            '& .MuiSvgIcon-root': {
+                                color: '#fff',
+                            },
+                        }}
+                    />
+                </div>
+                <div>
+                    <h2>Title</h2>
+                    <textarea
+                        type='text'
+                        rows={20}
+                        placeholder='Your text'
+                        className='w-full bg-transparent outline-none text-base mt-6 resize-none'
+                        onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+                    />
+                </div>
             </main>
         </section>
     );

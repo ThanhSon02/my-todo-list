@@ -1,0 +1,13 @@
+.togglePage:first-child ~ .highlighter{
+    transform: translateX(calc(100% + 24px));
+}
+.togglePage:first-child.active ~ .highlighter{
+    transform: translateX(0);
+    
+}
+
+
+.switch-wrapper .highlighter {
+    transition: transform 0.25s ease-in-out;
+}
+

@@ -2,8 +2,8 @@ import { ChevronRight } from '@mui/icons-material';
 import { formatISO, isSameDay } from 'date-fns';
 import { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { addScheduleItem } from '../SchedulePage/ScheduleReducer';
-import { Link, Navigate } from 'react-router-dom';
+import { addScheduleItem } from '../ScheduleReducer';
+import { Navigate } from 'react-router-dom';
 import { DateTimePicker } from '@mui/x-date-pickers';
 
 const initialState = {
@@ -36,6 +36,10 @@ function CreateSchedule() {
         }
     }, [error]);
 
+    const goBack = () => {
+        window.history.back();
+    };
+
     if (reDirect) {
         return <Navigate to={'/schedule'} />;
     }
@@ -43,7 +47,7 @@ function CreateSchedule() {
     return (
         <section className='p-6 bg-scheduleBg min-h-screen accent-indigo-800'>
             <header className='flex justify-between w-full mb-6'>
-                <Link to={'/schedule'} className='transition ease-in-out hover:-translate-x-1'>
+                <div onClick={goBack} className='transition ease-in-out hover:-translate-x-1'>
                     <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
                         <path
                             fill-rule='evenodd'
@@ -52,7 +56,7 @@ function CreateSchedule() {
                             fill='white'
                         />
                     </svg>
-                </Link>
+                </div>
                 <div className='flex w-16 justify-between'>
                     <input
                         type='checkbox'

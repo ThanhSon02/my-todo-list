@@ -1,6 +1,4 @@
-import { Link } from 'react-router-dom';
-import './Header.css';
-function Header({ checked, setChecked }) {
+function Header() {
     return (
         <div>
             <div className='flex justify-between px-8 pt-6 pb-9 items-center'>
@@ -39,25 +37,6 @@ function Header({ checked, setChecked }) {
                         </svg>
                     </div>
                 </div>
-            </div>
-
-            <div className='switch-wrapper flex justify-between items-center w-74.5 h-10 my-0 mx-auto bg-switchBtnBg rounded text-center p-1 relative'>
-                <input id='switch' type='checkbox' name='switch' />
-                <Link
-                    to={'/schedule'}
-                    className='select-none text-base font-semibold w-33.25 h-8 leading-8 z-10 cursor-pointer focus:outline-none'
-                    htmlFor='switch'
-                >
-                    Schedule
-                </Link>
-                <Link
-                    to={'/note'}
-                    className='select-none text-base font-semibold w-33.25 h-8 leading-8 z-10 cursor-pointer focus:outline-none'
-                    htmlFor='switch'
-                >
-                    Note
-                </Link>
-                <span className='highlighter bg-switchBtn rounded absolute w-33.25 h-8 left-1 top-1'></span>
             </div>
         </div>
     );
