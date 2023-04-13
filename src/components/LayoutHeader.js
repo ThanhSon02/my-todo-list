@@ -1,12 +1,26 @@
 import Header from './Header';
 import { useState } from 'react';
-import CreateModal from './CreateModal';
-import { Link } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import '../components/LayoutHeader.css';
+import { SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
+import { ScheduleIcon, NoteIcon, CreateIcon } from '../icons';
 
-function LayoutHeader({ children }) {
-    const [showModal, setShowModal] = useState(false);
+function LayoutHeader() {
     const [checked, setChecked] = useState(true);
+    const actions = [
+        {
+            icon: <NoteIcon />,
+            name: 'Note',
+        },
+        {
+            icon: <ScheduleIcon />,
+            name: 'Schedule',
+        },
+    ];
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate('/createNote');
+    };
 
     return (
         <main className='bg-scheduleBg min-h-screen text-white relative'>
@@ -35,17 +49,37 @@ function LayoutHeader({ children }) {
                 <span className='highlighter bg-switchBtn rounded absolute w-33.25 h-8 left-1 top-1'></span>
             </div>
 
-            {children}
-            <div
-                onClick={() => setShowModal(!showModal)}
-                className='flex justify-center items-center fixed bottom-8 right-8 w-12 h-12 bg-today rounded-full'
+            <Outlet context={[checked, setChecked]}></Outlet>
+
+            <SpeedDial
+                ariaLabel=''
+                sx={{
+                    position: 'fixed',
+                    bottom: 16,
+                    right: 16,
+                    color: '#7E64FF',
+                    zIndex: 5,
+                    '& .css-7dv1rb-MuiButtonBase-root-MuiFab-root-MuiSpeedDial-fab': {
+                        backgroundColor: '#7E64FF',
+                    },
+                    '& .css-7dv1rb-MuiButtonBase-root-MuiFab-root-MuiSpeedDial-fab:hover': {
+                        backgroundColor: '#7E64FF',
+                    },
+                }}
+                icon={<SpeedDialIcon />}
             >
-                <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                    <path d='M10 2V18' stroke='white' stroke-width='3' stroke-linecap='round' />
-                    <path d='M2 10L18 10' stroke='white' stroke-width='3' stroke-linecap='round' />
-                </svg>
-            </div>
-            {showModal && <CreateModal setShowModal={setShowModal} setChecked={setChecked} />}
+                {actions.map((action) => (
+                    <SpeedDialAction
+                        sx={{
+                            backgroundColor: '#7E64FF',
+                        }}
+                        key={action.name}
+                        icon={action.icon}
+                        tooltipTitle={action.name}
+                        onClick={handleClick}
+                    />
+                ))}
+            </SpeedDial>
         </main>
     );
 }

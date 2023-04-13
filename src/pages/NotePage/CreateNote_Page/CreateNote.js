@@ -3,7 +3,7 @@ import { useState } from 'react';
 import formatISO from 'date-fns/formatISO';
 import { useDispatch } from 'react-redux';
 import { addNoteItem } from '../NoteReducer';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useOutletContext } from 'react-router-dom';
 
 const initialState = {
     id: '',
@@ -16,8 +16,9 @@ function CreateNote() {
     const [formData, setFormData] = useState(initialState);
     const [reDirect, setReDirect] = useState(false);
     const dispatch = useDispatch();
-
+    const [checked, setChecked] = useOutletContext();
     const goBack = () => {
+        setChecked(false);
         window.history.back();
     };
 
@@ -26,7 +27,7 @@ function CreateNote() {
     }
 
     return (
-        <section className='p-6 bg-[#7E64FF] min-h-screen accent-indigo-800 text-white'>
+        <section className='p-6 bg-[#7E64FF] min-h-screen accent-indigo-800 text-white absolute top-0 left-0 right-0 bottom-0'>
             <header className='flex justify-between w-full mb-6'>
                 <div onClick={goBack} className='transition ease-in-out hover:-translate-x-1'>
                     <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>

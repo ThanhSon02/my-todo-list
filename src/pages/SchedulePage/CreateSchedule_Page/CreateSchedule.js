@@ -45,7 +45,7 @@ function CreateSchedule() {
     }
 
     return (
-        <section className='p-6 bg-scheduleBg min-h-screen accent-indigo-800'>
+        <section className='p-6 bg-scheduleBg min-h-screen accent-indigo-800 absolute top-0 left-0 bottom-0 right-0 z-20'>
             <header className='flex justify-between w-full mb-6'>
                 <div onClick={goBack} className='transition ease-in-out hover:-translate-x-1'>
                     <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
