@@ -1,11 +1,20 @@
 .togglePage:first-child ~ .highlighter{
     transform: translateX(calc(100% + 24px));
 }
-.togglePage:first-child.active ~ .highlighter{
+
+.togglePage:first-child.schedule ~ .highlighter{
     transform: translateX(0);
     
 }
 
+.togglePage:last-child.note ~ .highlighter{
+    transform: translateX(calc(100% + 24px));
+}
+
+.togglePage:last-child ~ .highlighter{
+    transform: translateX(0);
+    
+}
 
 .switch-wrapper .highlighter {
     transition: transform 0.25s ease-in-out;

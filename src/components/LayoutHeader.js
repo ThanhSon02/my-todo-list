@@ -11,15 +11,23 @@ function LayoutHeader() {
         {
             icon: <NoteIcon />,
             name: 'Note',
+            operation: 'note'
         },
         {
             icon: <ScheduleIcon />,
             name: 'Schedule',
+            operation: 'schedule'
+            
         },
     ];
     const navigate = useNavigate();
-    const handleClick = () => {
-        navigate('/createNote');
+    const handleClick = (e, operation) => {
+        e.preventDefault()
+        if(operation === 'note') {
+            navigate('/createNote');
+        } else if(operation === 'schedule') {
+            navigate('/createSchedule');
+        }
     };
 
     return (
@@ -30,7 +38,7 @@ function LayoutHeader() {
                 <Link
                     onClick={() => setChecked(true)}
                     className={`${
-                        checked ? 'active' : ''
+                        checked ? 'schedule' : ''
                     } togglePage select-none text-base font-semibold w-33.25 h-8 leading-8 z-10 cursor-pointer focus:outline-none`}
                     checked
                     to={'/schedule'}
@@ -40,7 +48,7 @@ function LayoutHeader() {
                 <Link
                     onClick={() => setChecked(false)}
                     className={`${
-                        checked ? '' : 'active'
+                        checked ? '' : 'note'
                     } togglePage select-none text-base font-semibold w-33.25 h-8 leading-8 z-10 cursor-pointer focus:outline-none`}
                     to={'/note'}
                 >
@@ -76,7 +84,7 @@ function LayoutHeader() {
                         key={action.name}
                         icon={action.icon}
                         tooltipTitle={action.name}
-                        onClick={handleClick}
+                        onClick={(e) => {handleClick(e.action.operation)}}
                     />
                 ))}
             </SpeedDial>
