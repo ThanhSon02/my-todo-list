@@ -7,27 +7,14 @@ import { ScheduleIcon, NoteIcon, CreateIcon } from '../icons';
 
 function LayoutHeader() {
     const [checked, setChecked] = useState(true);
-    const actions = [
-        {
-            icon: <NoteIcon />,
-            name: 'Note',
-            operation: 'note'
-        },
-        {
-            icon: <ScheduleIcon />,
-            name: 'Schedule',
-            operation: 'schedule'
-            
-        },
-    ];
     const navigate = useNavigate();
-    const handleClick = (e, operation) => {
-        e.preventDefault()
-        if(operation === 'note') {
-            navigate('/createNote');
-        } else if(operation === 'schedule') {
-            navigate('/createSchedule');
-        }
+
+    const handleNoteClick = () => {
+        navigate('/createNote');
+    };
+
+    const handleScheduleClick = () => {
+        navigate('/createSchedule');
     };
 
     return (
@@ -76,17 +63,44 @@ function LayoutHeader() {
                 }}
                 icon={<SpeedDialIcon />}
             >
-                {actions.map((action) => (
-                    <SpeedDialAction
-                        sx={{
-                            backgroundColor: '#7E64FF',
-                        }}
-                        key={action.name}
-                        icon={action.icon}
-                        tooltipTitle={action.name}
-                        onClick={(e) => {handleClick(e.action.operation)}}
-                    />
-                ))}
+                <SpeedDialAction
+                    sx={{
+                        '& .css-13y48ld-MuiSpeedDialAction-staticTooltipLabel': {
+                            backgroundColor: '#7e64ff',
+                            color: '#fff',
+                        },
+                        '& .css-1e2cad8-MuiButtonBase-root-MuiFab-root-MuiSpeedDialAction-fab': {
+                            backgroundColor: '#7e64ff',
+                        },
+                        '& .css-1e2cad8-MuiButtonBase-root-MuiFab-root-MuiSpeedDialAction-fab:hover': {
+                            backgroundColor: '#5c5679',
+                        },
+                    }}
+                    key={'Note'}
+                    icon={<NoteIcon />}
+                    tooltipTitle={'Note'}
+                    tooltipOpen
+                    onClick={handleNoteClick}
+                />
+                <SpeedDialAction
+                    sx={{
+                        '& .css-13y48ld-MuiSpeedDialAction-staticTooltipLabel': {
+                            backgroundColor: '#7e64ff',
+                            color: '#fff',
+                        },
+                        '& .css-1e2cad8-MuiButtonBase-root-MuiFab-root-MuiSpeedDialAction-fab': {
+                            backgroundColor: '#7e64ff',
+                        },
+                        '& .css-1e2cad8-MuiButtonBase-root-MuiFab-root-MuiSpeedDialAction-fab:hover': {
+                            backgroundColor: '#5c5679',
+                        },
+                    }}
+                    key={'Schedule'}
+                    icon={<ScheduleIcon />}
+                    tooltipTitle={'Schedule'}
+                    tooltipOpen
+                    onClick={handleScheduleClick}
+                />
             </SpeedDial>
         </main>
     );

@@ -23,6 +23,7 @@ function CreateNote() {
     };
 
     if (reDirect) {
+        setChecked(false);
         return <Navigate to={'/note'} />;
     }
 

@@ -3,7 +3,7 @@ import { formatISO, isSameDay } from 'date-fns';
 import { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { addScheduleItem } from '../ScheduleReducer';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useOutletContext } from 'react-router-dom';
 import { DateTimePicker } from '@mui/x-date-pickers';
 
 const initialState = {
@@ -23,6 +23,7 @@ function CreateSchedule() {
     const [reDirect, setReDirect] = useState(false);
     const [timeDefault, setTimeDefault] = useState(null);
     const [error, setError] = useState(null);
+    const [checked, setChecked] = useOutletContext();
 
     const errorMessage = useMemo(() => {
         switch (error) {
@@ -41,6 +42,7 @@ function CreateSchedule() {
     };
 
     if (reDirect) {
+        setChecked(true);
         return <Navigate to={'/schedule'} />;
     }
 
