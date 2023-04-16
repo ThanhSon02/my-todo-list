@@ -1,9 +1,12 @@
 import { format, isSameDay, isSameMonth, parseISO } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeScheduleItem } from '../pages/SchedulePage/ScheduleReducer';
+import { useRef } from 'react';
+import { Clear, Edit } from '@mui/icons-material';
 function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
     const scheduleList = useSelector((state) => state.schedule);
     const dispatch = useDispatch();
+    const listDateSchedule = useRef();
 
     let datas = scheduleList.filter((scheduleItem) =>
         isSameMonth(firstDayOfCurrentMonth, parseISO(scheduleItem.timeStart)),
@@ -12,9 +15,9 @@ function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
         <div className='ml-2 px-5'>
             <h1 className='mb-8 font-bold'>Schedule</h1>
             {datas.length > 0 ? (
-                <div>
+                <div ref={listDateSchedule}>
                     {datas.map((data, index) => (
-                        <div key={index} className='flex relative'>
+                        <div id={data.id} key={data.id} className='flex relative'>
                             {!isSameDay(parseISO(data.timeStart), parseISO(datas[index - 1]?.timeStart)) ? (
                                 <div
                                     className={
@@ -68,6 +71,10 @@ function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div className='absolute right-[-12px] top-[-12px] w-6 h-6 flex justify-center items-center rounded-circle cursor-pointer bg-searchBg'>
+                                {/* <Clear /> */}
+                                <Edit />
                             </div>
                         </div>
                     ))}
