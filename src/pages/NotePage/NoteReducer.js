@@ -2,32 +2,36 @@ import { createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 import { parseISO } from 'date-fns';
 
-const initialState = [
-    {
-        id: 'vnewo',
-        title: 'need for this month',
-        date: '2023-04-22',
-        pin: true,
-    },
-    {
-        id: 'nfk',
-        title: 'need for this month',
-        date: '2023-04-22',
-        pin: false,
-    },
-    {
-        id: 'ncewn',
-        title: 'need for this month',
-        date: '2023-04-22',
-        pin: true,
-    },
-    {
-        id: 'fpeo',
-        title: 'need for this month',
-        date: '2023-04-22',
-        pin: false,
-    },
-];
+const initialState = {
+    noteList: [
+        {
+            id: 'vnewo',
+            title: 'need for this month',
+            date: '2023-04-22',
+            pin: true,
+        },
+        {
+            id: 'nfk',
+            title: 'need for this month',
+            date: '2023-04-22',
+            pin: false,
+        },
+        {
+            id: 'ncewn',
+            title: 'need for this month',
+            date: '2023-04-22',
+            pin: true,
+        },
+        {
+            id: 'fpeo',
+            title: 'need for this month',
+            date: '2023-04-22',
+            pin: false,
+        },
+    ],
+    editing: false,
+    deleting: false,
+};
 
 const sortItem = (state) => {
     state.sort((a, b) => {
@@ -35,7 +39,7 @@ const sortItem = (state) => {
     });
 };
 
-sortItem(initialState);
+sortItem(initialState.noteList);
 
 export const NoteReducer = createSlice({
     name: 'note',
@@ -44,8 +48,8 @@ export const NoteReducer = createSlice({
         addNoteItem: {
             reducer: (state, action) => {
                 const newNoteItem = action.payload;
-                state.push(newNoteItem);
-                sortItem(state);
+                state.noteList.push(newNoteItem);
+                sortItem(state.noteList);
             },
             prepare: (newNoteItem) => ({
                 payload: { ...newNoteItem, id: nanoid() },

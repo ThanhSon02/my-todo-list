@@ -1,0 +1,7 @@
+.option-modal {
+    display: none;
+}
+
+.option:hover > .option-modal{
+    display: flex;
+}

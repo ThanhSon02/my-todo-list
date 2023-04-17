@@ -1,10 +1,12 @@
 import { format, isSameDay, isSameMonth, parseISO } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeScheduleItem } from '../pages/SchedulePage/ScheduleReducer';
+import { closeScheduleItem, deletingSchedule, editingSchedule } from '../pages/SchedulePage/ScheduleReducer';
 import { useRef } from 'react';
-import { Clear, Edit } from '@mui/icons-material';
+import { OptionIcon } from '../icons';
+import './ScheduleTimeLine.css';
+
 function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
-    const scheduleList = useSelector((state) => state.schedule);
+    const scheduleList = useSelector((state) => state.schedule.scheduleList);
     const dispatch = useDispatch();
     const listDateSchedule = useRef();
 
@@ -39,19 +41,54 @@ function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
                                     >
                                         <div className='flex relative justify-between before:block before:absolute before:top-6 before:left-0 before:right-0 before:border-line before:border-b-lineColorActive '>
                                             <h3>{data.title}</h3>
-                                            <input
-                                                type='checkbox'
-                                                checked={data.done}
-                                                value={data.id}
-                                                onChange={(e) =>
-                                                    dispatch(
-                                                        closeScheduleItem({
-                                                            id: e.target.value,
-                                                            done: e.target.checked,
-                                                        }),
-                                                    )
-                                                }
-                                            />
+                                            <div className='flex items-center gap-2'>
+                                                <input
+                                                    type='checkbox'
+                                                    checked={data.done}
+                                                    value={data.id}
+                                                    onChange={(e) =>
+                                                        dispatch(
+                                                            closeScheduleItem({
+                                                                id: e.target.value,
+                                                                done: e.target.checked,
+                                                            }),
+                                                        )
+                                                    }
+                                                />
+                                                <div className='cursor-pointer relative option'>
+                                                    <OptionIcon width={14} height={14} />
+                                                    <div className='option-modal flex-col justify-center gap-2 text-center absolute top-3 right-0 rounded-md bg-violet-500 w-16 h-20 shadow-lg'>
+                                                        <div
+                                                            onClick={() => {
+                                                                dispatch(
+                                                                    editingSchedule({
+                                                                        id: data.id,
+                                                                        editing: true,
+                                                                        deleting: false,
+                                                                    }),
+                                                                );
+                                                            }}
+                                                            className='hover:bg-slate-300 hover:text-black w-full h-1/3 cursor-default px-2'
+                                                        >
+                                                            Edit
+                                                        </div>
+                                                        <div
+                                                            onClick={() => {
+                                                                dispatch(
+                                                                    deletingSchedule({
+                                                                        id: data.id,
+                                                                        editing: false,
+                                                                        deleting: true,
+                                                                    }),
+                                                                );
+                                                            }}
+                                                            className='hover:bg-slate-300 hover:text-black w-full h-1/3 cursor-default px-2'
+                                                        >
+                                                            Delete
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div className='flex gap-3 mt-3'>
                                             <div className='text-left text-xs font-bold leading-5'>
@@ -71,10 +108,6 @@ function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className='absolute right-[-12px] top-[-12px] w-6 h-6 flex justify-center items-center rounded-circle cursor-pointer bg-searchBg'>
-                                {/* <Clear /> */}
-                                <Edit />
                             </div>
                         </div>
                     ))}

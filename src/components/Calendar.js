@@ -12,16 +12,19 @@ import {
     parseISO,
 } from 'date-fns';
 import { AiOutlineRight, AiOutlineLeft } from 'react-icons/ai';
+import './Calendar.css';
+import { useRef } from 'react';
 
 const classNames = (...classes) => {
     return classes.filter(Boolean).join(' ');
 };
 
-function Calendar({ datas, setCurrentMonth, firstDayOfCurrentMonth }) {
+function Calendar({ datas, currentMonth, setCurrentMonth, firstDayOfCurrentMonth }) {
     const days = eachDayOfInterval({
         start: startOfWeek(firstDayOfCurrentMonth),
         end: endOfWeek(endOfMonth(firstDayOfCurrentMonth)),
     });
+    const monthRef = useRef();
 
     const handlePreviousMonth = () => {
         let firstDayNextMonth = add(firstDayOfCurrentMonth, { months: -1 });
@@ -56,7 +59,7 @@ function Calendar({ datas, setCurrentMonth, firstDayOfCurrentMonth }) {
                     <div className='p-2'>FRI</div>
                     <div className='p-2'>SAT</div>
                 </div>
-                <div className='grid grid-cols-7 grid-rows-6 justify-items-center text-white'>
+                <div ref={monthRef} className='grid grid-cols-7 grid-rows-6 justify-items-center text-white'>
                     {days.map((day, index) => (
                         <a
                             href={`#${datas.find((date) => isSameDay(parseISO(date.timeStart), day))?.id}`}
@@ -64,8 +67,9 @@ function Calendar({ datas, setCurrentMonth, firstDayOfCurrentMonth }) {
                             className={classNames(
                                 isSunday(day) && isSameMonth(day, firstDayOfCurrentMonth) && 'text-highLight',
                                 !isSameMonth(day, firstDayOfCurrentMonth) && 'text-notSameMonth',
-                                datas.some((date) => isSameDay(parseISO(date.timeStart), day)) && 'cursor-pointer',
-                                'font-semibold w-11 h-11 flex justify-center items-center relative cursor-default',
+                                datas.some((date) => isSameDay(parseISO(date.timeStart), day)) &&
+                                    'cursor-pointer pointer-events-auto',
+                                'font-semibold w-11 h-11 flex justify-center items-center relative cursor-default pointer-events-none',
                             )}
                         >
                             <span

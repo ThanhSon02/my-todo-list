@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import '../components/LayoutHeader.css';
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
-import { ScheduleIcon, NoteIcon, CreateIcon } from '../icons';
+import { ScheduleIcon, NoteIcon } from '../icons';
 
 function LayoutHeader() {
     const [checked, setChecked] = useState(true);

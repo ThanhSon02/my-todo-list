@@ -2,7 +2,7 @@ import { format, parseISO } from 'date-fns';
 import { useSelector } from 'react-redux';
 
 function NotePage() {
-    const noteList = useSelector((state) => state.note);
+    const noteList = useSelector((state) => state.note.noteList);
 
     return (
         <main className=' p-8'>

@@ -40,8 +40,8 @@ export const NotificationIcon = () => (
     </svg>
 );
 
-export const OptionIcon = () => (
-    <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+export const OptionIcon = ({ width = 24, height = 24 }) => (
+    <svg width={width} height={height} viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
         <path
             d='M11.8095 6.85719C13.0719 6.85719 14.0952 5.83385 14.0952 4.57148C14.0952 3.30912 13.0719 2.28577 11.8095 2.28577C10.5472 2.28577 9.5238 3.30912 9.5238 4.57148C9.5238 5.83385 10.5472 6.85719 11.8095 6.85719Z'
             fill='white'

@@ -1,0 +1,27 @@
+.next-month {
+    animation: toTheRight .4s ease-in-out ;
+}
+
+.back-month {
+    animation: toTheLeft .4s ease-in-out ;
+}
+
+@keyframes toTheLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    } to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+@keyframes toTheRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    } to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}

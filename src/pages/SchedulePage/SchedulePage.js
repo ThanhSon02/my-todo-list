@@ -1,5 +1,4 @@
 import Calendar from '../../components/Calendar';
-import Header from '../../components/Header';
 import ScheduleTimeLine from '../../components/ScheduleTimeLine';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -7,14 +6,14 @@ import { format, startOfToday, parse } from 'date-fns';
 
 function SchedulePage() {
     const today = startOfToday();
-    const scheduleList = useSelector((state) => state.schedule);
+    const schedule_list = useSelector((state) => state.schedule.scheduleList);
     const [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'));
     let firstDayOfCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
 
     return (
         <main className='min-h-screen text-white relative'>
             <Calendar
-                datas={scheduleList}
+                datas={schedule_list}
                 today={today}
                 firstDayOfCurrentMonth={firstDayOfCurrentMonth}
                 currentMonth={currentMonth}
