@@ -1,15 +1,16 @@
 import { format, isSameDay, isSameMonth, parseISO } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeScheduleItem, deletingSchedule, editingSchedule } from '../pages/SchedulePage/ScheduleReducer';
+import { closeScheduleItem, deletingSchedule, startEditingSchedule } from '../pages/SchedulePage/ScheduleReducer';
 import { useRef } from 'react';
 import { OptionIcon } from '../icons';
 import './ScheduleTimeLine.css';
+import { useNavigate } from 'react-router-dom';
 
 function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
     const scheduleList = useSelector((state) => state.schedule.scheduleList);
     const dispatch = useDispatch();
     const listDateSchedule = useRef();
-
+    const navigate = useNavigate()
     let datas = scheduleList.filter((scheduleItem) =>
         isSameMonth(firstDayOfCurrentMonth, parseISO(scheduleItem.timeStart)),
     );
@@ -61,12 +62,9 @@ function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
                                                         <div
                                                             onClick={() => {
                                                                 dispatch(
-                                                                    editingSchedule({
-                                                                        id: data.id,
-                                                                        editing: true,
-                                                                        deleting: false,
-                                                                    }),
+                                                                    startEditingSchedule({id: data.id,}),
                                                                 );
+                                                                navigate('/createSchedule')
                                                             }}
                                                             className='hover:bg-slate-300 hover:text-black w-full h-1/3 cursor-default px-2'
                                                         >
