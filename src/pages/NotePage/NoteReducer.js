@@ -13,19 +13,19 @@ const initialState = {
         {
             id: 'nfk',
             title: 'need for this month',
-            date: '2023-04-22',
-            pin: false,
+            date: '2023-04-17',
+            pin: true,
         },
         {
             id: 'ncewn',
             title: 'need for this month',
-            date: '2023-04-22',
+            date: '2023-04-30',
             pin: true,
         },
         {
             id: 'fpeo',
             title: 'need for this month',
-            date: '2023-04-22',
+            date: '2023-04-26',
             pin: false,
         },
     ],
@@ -34,7 +34,13 @@ const initialState = {
 
 const sortItem = (state) => {
     state.sort((a, b) => {
-        return parseISO(b.date) - parseISO(a.date);
+        if (a.pin && !b.pin) {
+            return -1;
+        } else if (!a.pin && b.pin) {
+            return 1;
+        } else {
+            return parseISO(b.date) - parseISO(a.date);
+        }
     });
 };
 
@@ -73,6 +79,7 @@ export const NoteReducer = createSlice({
                 }
                 return false;
             });
+            sortItem(state.noteList);
         },
     },
 });

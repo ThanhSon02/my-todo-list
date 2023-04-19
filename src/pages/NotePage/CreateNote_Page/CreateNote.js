@@ -42,9 +42,16 @@ function CreateNote() {
                     <BackIcon />
                 </div>
                 <div className='flex w-24 justify-between'>
-                    <span>
-                        <PinIcon />
-                    </span>
+                    <input
+                        className='hidden'
+                        id='pin'
+                        checked={formData.pin}
+                        onChange={(e) => setFormData((prev) => ({ ...prev, pin: e.target.checked }))}
+                        type='checkbox'
+                    />
+                    <label htmlFor='pin'>
+                        <PinIcon color='red' />
+                    </label>
                     {editingNote ? (
                         <div
                             className='cursor-pointer'
