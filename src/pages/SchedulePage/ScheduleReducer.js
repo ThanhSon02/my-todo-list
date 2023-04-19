@@ -41,7 +41,7 @@ const initialState = {
             done: false,
         },
     ],
-    editingSchedule: null
+    editingSchedule: null,
 };
 
 const sortItem = (state) => {
@@ -75,27 +75,28 @@ export const ScheduleSlice = createSlice({
             }),
         },
         startEditingSchedule: (state, action) => {
-            const scheduleItemId = action.payload.id;
+            const scheduleItemId = action.payload;
             const indexFound = state.scheduleList.findIndex((item) => item?.id === scheduleItemId);
-            state.editingSchedule = state.scheduleList[indexFound]
+            state.editingSchedule = state.scheduleList[indexFound];
         },
         finishEditingSchedule: (state, action) => {
-            const scheduleId = action.payload.id
+            const scheduleId = action.payload.id;
             state.scheduleList.some((scheduleItem, index) => {
-                if(scheduleItem.id === scheduleId) {
-                    state.scheduleList[index] = action.payload
-                    return true
+                if (scheduleItem.id === scheduleId) {
+                    state.scheduleList[index] = action.payload;
+                    return true;
                 }
-                return false
-            })
+                return false;
+            });
         },
-        deletingSchedule: (state, action) => {
-            const scheduleItemId = action.payload.id;
+        deleteSchedule: (state, action) => {
+            const scheduleItemId = action.payload;
             const indexFound = state.scheduleList.findIndex((item) => item?.id === scheduleItemId);
             state.scheduleList.splice(indexFound, 1);
         },
     },
 });
 
-export const { closeScheduleItem, addScheduleItem, startEditingSchedule, deletingSchedule, finishEditingSchedule } = ScheduleSlice.actions;
+export const { closeScheduleItem, addScheduleItem, startEditingSchedule, deleteSchedule, finishEditingSchedule } =
+    ScheduleSlice.actions;
 export default ScheduleSlice.reducer;

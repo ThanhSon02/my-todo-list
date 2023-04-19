@@ -1,6 +1,6 @@
 import { format, isSameDay, isSameMonth, parseISO } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeScheduleItem, deletingSchedule, startEditingSchedule } from '../pages/SchedulePage/ScheduleReducer';
+import { closeScheduleItem, deleteSchedule, startEditingSchedule } from '../pages/SchedulePage/ScheduleReducer';
 import { useRef } from 'react';
 import { OptionIcon } from '../icons';
 import './ScheduleTimeLine.css';
@@ -10,7 +10,7 @@ function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
     const scheduleList = useSelector((state) => state.schedule.scheduleList);
     const dispatch = useDispatch();
     const listDateSchedule = useRef();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     let datas = scheduleList.filter((scheduleItem) =>
         isSameMonth(firstDayOfCurrentMonth, parseISO(scheduleItem.timeStart)),
     );
@@ -61,10 +61,8 @@ function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
                                                     <div className='option-modal flex-col justify-center gap-2 text-center absolute top-3 right-0 rounded-md bg-violet-500 w-16 h-20 shadow-lg'>
                                                         <div
                                                             onClick={() => {
-                                                                dispatch(
-                                                                    startEditingSchedule({id: data.id,}),
-                                                                );
-                                                                navigate('/createSchedule')
+                                                                dispatch(startEditingSchedule(data.id));
+                                                                navigate('/createSchedule');
                                                             }}
                                                             className='hover:bg-slate-300 hover:text-black w-full h-1/3 cursor-default px-2'
                                                         >
@@ -72,13 +70,7 @@ function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
                                                         </div>
                                                         <div
                                                             onClick={() => {
-                                                                dispatch(
-                                                                    deletingSchedule({
-                                                                        id: data.id,
-                                                                        editing: false,
-                                                                        deleting: true,
-                                                                    }),
-                                                                );
+                                                                dispatch(deleteSchedule(data.id));
                                                             }}
                                                             className='hover:bg-slate-300 hover:text-black w-full h-1/3 cursor-default px-2'
                                                         >

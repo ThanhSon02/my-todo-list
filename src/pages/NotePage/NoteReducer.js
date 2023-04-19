@@ -29,8 +29,7 @@ const initialState = {
             pin: false,
         },
     ],
-    editing: false,
-    deleting: false,
+    editingNote: null,
 };
 
 const sortItem = (state) => {
@@ -55,8 +54,28 @@ export const NoteReducer = createSlice({
                 payload: { ...newNoteItem, id: nanoid() },
             }),
         },
+        deleteNote: (state, action) => {
+            const noteId = action.payload;
+            const indexFound = state.noteList.findIndex((noteItem) => noteItem?.id === noteId);
+            state.noteList.splice(indexFound, 1);
+        },
+        startEditingNote: (state, action) => {
+            const noteId = action.payload;
+            const indexFound = state.noteList.findIndex((noteItem) => noteItem?.id === noteId);
+            state.editingNote = state.noteList[indexFound];
+        },
+        finishEditingNote: (state, action) => {
+            const noteId = action.payload.id;
+            state.noteList.some((noteItem, index) => {
+                if (noteItem?.id === noteId) {
+                    state.noteList[index] = action.payload;
+                    return true;
+                }
+                return false;
+            });
+        },
     },
 });
 
-export const { addNoteItem } = NoteReducer.actions;
+export const { addNoteItem, deleteNote, startEditingNote, finishEditingNote } = NoteReducer.actions;
 export default NoteReducer.reducer;

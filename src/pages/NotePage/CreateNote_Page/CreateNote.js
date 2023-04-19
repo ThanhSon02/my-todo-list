@@ -1,10 +1,12 @@
 import { DatePicker } from '@mui/x-date-pickers';
 import { useState } from 'react';
 import formatISO from 'date-fns/formatISO';
-import { useDispatch } from 'react-redux';
-import { addNoteItem } from '../NoteReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { addNoteItem, finishEditingNote } from '../NoteReducer';
 import { Navigate, useNavigate, useOutletContext } from 'react-router-dom';
 import { BackIcon, CompleteIcon, PinIcon } from '../../../icons';
+import { useEffect } from 'react';
+import { parseISO } from 'date-fns';
 
 const initialState = {
     id: '',
@@ -16,9 +18,13 @@ const initialState = {
 function CreateNote() {
     const [formData, setFormData] = useState(initialState);
     const [reDirect, setReDirect] = useState(false);
+    const editingNote = useSelector((state) => state.note.editingNote);
     const dispatch = useDispatch();
     const [checked, setChecked] = useOutletContext();
-    const navigate = useNavigate();
+
+    useEffect(() => {
+        setFormData(editingNote || initialState);
+    }, [editingNote]);
 
     const goBack = () => {
         window.history.back();
@@ -35,21 +41,32 @@ function CreateNote() {
                 <div onClick={goBack} className='transition ease-in-out hover:-translate-x-1'>
                     <BackIcon />
                 </div>
-                <div className='flex w-16 justify-between'>
+                <div className='flex w-24 justify-between'>
                     <span>
                         <PinIcon />
                     </span>
-                    <button
-                        onClick={() => {
-                            dispatch(addNoteItem(formData));
-                            setFormData(initialState);
-
-                            setReDirect(true);
-                        }}
-                        className='transition ease-in-out hover:translate-x-1'
-                    >
-                        <CompleteIcon />
-                    </button>
+                    {editingNote ? (
+                        <div
+                            className='cursor-pointer'
+                            onClick={() => {
+                                dispatch(finishEditingNote(formData));
+                                setReDirect('/note');
+                            }}
+                        >
+                            DONE
+                        </div>
+                    ) : (
+                        <button
+                            onClick={() => {
+                                dispatch(addNoteItem(formData));
+                                setFormData(initialState);
+                                setReDirect(true);
+                            }}
+                            className='transition ease-in-out hover:translate-x-1'
+                        >
+                            <CompleteIcon />
+                        </button>
+                    )}
                 </div>
             </header>
             <main className=''>
@@ -57,6 +74,7 @@ function CreateNote() {
                     <h2>Date</h2>
                     <DatePicker
                         onChange={(value) => setFormData((prev) => ({ ...prev, date: formatISO(value) }))}
+                        value={parseISO(formData.date)}
                         sx={{
                             '& .MuiInputBase-root': {
                                 color: '#fff',
@@ -75,6 +93,7 @@ function CreateNote() {
                 <div>
                     <h2>Title</h2>
                     <textarea
+                        value={formData.title}
                         type='text'
                         rows={20}
                         placeholder='Your text'
