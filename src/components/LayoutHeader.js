@@ -60,16 +60,19 @@ function LayoutHeader() {
                     '& .css-7dv1rb-MuiButtonBase-root-MuiFab-root-MuiSpeedDial-fab:hover': {
                         backgroundColor: '#7E64FF',
                     },
+                    '& .css-r9uhzn': {
+                        backgroundColor: '#7E64FF',
+                    },
                 }}
                 icon={<SpeedDialIcon />}
             >
                 <SpeedDialAction
                     sx={{
-                        '& .css-13y48ld-MuiSpeedDialAction-staticTooltipLabel': {
+                        '& .css-13y48ld-MuiSpeedDialAction-staticTooltipLabel, .css-16nb7rk': {
                             backgroundColor: '#7e64ff',
                             color: '#fff',
                         },
-                        '& .css-1e2cad8-MuiButtonBase-root-MuiFab-root-MuiSpeedDialAction-fab': {
+                        '& .css-1e2cad8-MuiButtonBase-root-MuiFab-root-MuiSpeedDialAction-fab, .css-1u93ig5': {
                             backgroundColor: '#7e64ff',
                         },
                         '& .css-1e2cad8-MuiButtonBase-root-MuiFab-root-MuiSpeedDialAction-fab:hover': {
@@ -84,11 +87,14 @@ function LayoutHeader() {
                 />
                 <SpeedDialAction
                     sx={{
-                        '& .css-13y48ld-MuiSpeedDialAction-staticTooltipLabel': {
+                        '& .css-13y48ld-MuiSpeedDialAction-staticTooltipLabel, .css-16nb7rk': {
                             backgroundColor: '#7e64ff',
                             color: '#fff',
                         },
-                        '& .css-1e2cad8-MuiButtonBase-root-MuiFab-root-MuiSpeedDialAction-fab': {
+                        '& .css-1bn53lx.Mui-error .MuiOutlinedInput-notchedOutline': {
+                            backgroundColor: 'transparent',
+                        },
+                        '& .css-1e2cad8-MuiButtonBase-root-MuiFab-root-MuiSpeedDialAction-fab, .css-1u93ig5': {
                             backgroundColor: '#7e64ff',
                         },
                         '& .css-1e2cad8-MuiButtonBase-root-MuiFab-root-MuiSpeedDialAction-fab:hover': {
