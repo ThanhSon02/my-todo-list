@@ -11,9 +11,8 @@ import {
     isSameDay,
     parseISO,
 } from 'date-fns';
-import { AiOutlineRight, AiOutlineLeft } from 'react-icons/ai';
-import './Calendar.css';
 import { useRef } from 'react';
+import { ArrowCircleLeft, ArrowCircleRight } from '@mui/icons-material';
 
 const classNames = (...classes) => {
     return classes.filter(Boolean).join(' ');
@@ -37,20 +36,22 @@ function Calendar({ datas, currentMonth, setCurrentMonth, firstDayOfCurrentMonth
     };
 
     return (
-        <div className='p-10'>
+        <div className='p-10 xl:my-0 xl:w-3/4 xl:mx-auto'>
             <div className='text-center h-max'>
-                <h2 className='uppercase text-lg font-bold'>{format(firstDayOfCurrentMonth, 'MMMM yyyy')}</h2>
-                <div className='flex justify-around'>
+                <h2 className='uppercase text-lg font-bold xl:text-[26px]'>
+                    {format(firstDayOfCurrentMonth, 'MMMM yyyy')}
+                </h2>
+                <div className='flex justify-between xl:py-4 xl:px-[3.5rem] md:px-8 lg:px-12'>
                     <button onClick={handlePreviousMonth}>
-                        <AiOutlineLeft />
+                        <ArrowCircleLeft />
                     </button>
                     <button onClick={handleNextMonth}>
-                        <AiOutlineRight />
+                        <ArrowCircleRight />
                     </button>
                 </div>
             </div>
             <div>
-                <div className='grid grid-cols-7 font-extrabold justify-items-center mb-1'>
+                <div className='grid grid-cols-7 font-extrabold justify-items-center mb-1 xl:text-xl'>
                     <div className='p-2 text-highLight'>SUN</div>
                     <div className='p-2'>MON</div>
                     <div className='p-2'>TUE</div>
@@ -59,7 +60,10 @@ function Calendar({ datas, currentMonth, setCurrentMonth, firstDayOfCurrentMonth
                     <div className='p-2'>FRI</div>
                     <div className='p-2'>SAT</div>
                 </div>
-                <div ref={monthRef} className='grid grid-cols-7 grid-rows-6 justify-items-center text-white'>
+                <div
+                    ref={monthRef}
+                    className='grid grid-cols-7 grid-rows-6 justify-items-center xl:h-[500px] text-white xl:text-[18px]'
+                >
                     {days.map((day, index) => (
                         <a
                             href={`#${datas.find((date) => isSameDay(parseISO(date.timeStart), day))?.id}`}
@@ -69,7 +73,7 @@ function Calendar({ datas, currentMonth, setCurrentMonth, firstDayOfCurrentMonth
                                 !isSameMonth(day, firstDayOfCurrentMonth) && 'text-notSameMonth',
                                 datas.some((date) => isSameDay(parseISO(date.timeStart), day)) &&
                                     'cursor-pointer pointer-events-auto',
-                                'font-semibold w-11 h-11 flex justify-center items-center relative cursor-default pointer-events-none',
+                                'font-semibold w-11 h-11 xl:w-16 xl:h-16 lg:w-[3.75rem] lg:h-[3.75rem] flex justify-center items-center relative cursor-default pointer-events-none',
                             )}
                         >
                             <span
@@ -81,7 +85,7 @@ function Calendar({ datas, currentMonth, setCurrentMonth, firstDayOfCurrentMonth
                                 {format(day, 'd')}
                             </span>
                             {datas.some((date) => isSameDay(parseISO(date.timeStart), day)) && (
-                                <div className='absolute bottom-1 w-10 h-line bg-white'></div>
+                                <div className='absolute bottom-1 xl:bottom-3 w-10 h-line bg-white'></div>
                             )}
                         </a>
                     ))}

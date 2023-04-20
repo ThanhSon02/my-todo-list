@@ -8,14 +8,14 @@ import CreateNote from '../pages/NotePage/CreateNote_Page/CreateNote';
 
 export default createBrowserRouter([
     {
-        path: 'start',
+        path: '/',
         element: <StartPage />,
     },
     {
-        path: '/',
         element: <LayoutHeader />,
         children: [
             {
+                index: true,
                 path: 'schedule',
                 element: <SchedulePage />,
             },
@@ -24,11 +24,11 @@ export default createBrowserRouter([
                 element: <NotePage />,
             },
             {
-                path: 'createSchedule',
+                path: '/schedule/createSchedule',
                 element: <CreateSchedule />,
             },
             {
-                path: 'createNote',
+                path: '/note/createNote',
                 element: <CreateNote />,
             },
         ],

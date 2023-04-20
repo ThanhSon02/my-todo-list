@@ -3,8 +3,8 @@ import { useState } from 'react';
 import formatISO from 'date-fns/formatISO';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNoteItem, finishEditingNote } from '../NoteReducer';
-import { Navigate, useNavigate, useOutletContext } from 'react-router-dom';
-import { BackIcon, CompleteIcon, PinIcon } from '../../../icons';
+import { Navigate, useOutletContext } from 'react-router-dom';
+import { BackIcon, CompleteIcon, PinIcon } from '../../../assets/icons';
 import { useEffect } from 'react';
 import { parseISO } from 'date-fns';
 
@@ -36,7 +36,7 @@ function CreateNote() {
     }
 
     return (
-        <section className='p-6 bg-[#7E64FF] min-h-screen accent-indigo-800 text-white absolute top-0 left-0 right-0 bottom-0 z-20'>
+        <section className='p-6 bg-[#7E64FF]  accent-indigo-800 text-white absolute top-0 left-0 right-0 bottom-0 z-20'>
             <header className='flex justify-between w-full mb-6'>
                 <div onClick={goBack} className='transition ease-in-out hover:-translate-x-1'>
                     <BackIcon />
@@ -50,7 +50,7 @@ function CreateNote() {
                         type='checkbox'
                     />
                     <label htmlFor='pin'>
-                        <PinIcon color='red' />
+                        <PinIcon color={formData.pin ? 'red' : 'white'} />
                     </label>
                     {editingNote ? (
                         <div
@@ -98,12 +98,12 @@ function CreateNote() {
                     />
                 </div>
                 <div>
-                    <h2>Title</h2>
+                    <label htmlFor='textarea'>Title</label>
                     <textarea
+                        id='textarea'
                         value={formData.title}
-                        type='text'
-                        rows={20}
-                        placeholder='Your text'
+                        rows={7}
+                        placeholder='Your text...'
                         className='w-full bg-transparent outline-none text-base mt-6 resize-none'
                         onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
                     />

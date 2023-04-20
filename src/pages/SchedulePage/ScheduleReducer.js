@@ -50,6 +50,11 @@ const sortItem = (state) => {
     });
 };
 
+const reLoadLocalStorage = (data) => {
+    const currentData = JSON.parse(window.localStorage.getItem('AppData'));
+    window.localStorage.setItem('AppData', JSON.stringify({ ...currentData, scheduleList: data }));
+};
+
 sortItem(initialState.scheduleList);
 
 export const ScheduleSlice = createSlice({
@@ -59,13 +64,17 @@ export const ScheduleSlice = createSlice({
         closeScheduleItem: (state, action) => {
             const scheduleItemId = action.payload.id;
             const indexFound = state.scheduleList.findIndex((item) => item?.id === scheduleItemId);
-            state.scheduleList[indexFound].done = action.payload.done;
+            const itemFound = state.scheduleList.find((item) => item?.id === scheduleItemId);
+            itemFound.done = action.payload.done;
+            state.scheduleList[indexFound] = itemFound;
+            // reLoadLocalStorage(state.scheduleList);
         },
         addScheduleItem: {
             reducer: (state, action) => {
                 const newSchedule = action.payload;
                 state.scheduleList.push(newSchedule);
                 sortItem(state.scheduleList);
+                // reLoadLocalStorage(state.scheduleList);
             },
             prepare: (newSchedule) => ({
                 payload: {
@@ -88,11 +97,15 @@ export const ScheduleSlice = createSlice({
                 }
                 return false;
             });
+            state.editingSchedule = null;
+            sortItem(state.scheduleList);
+            // reLoadLocalStorage(state.scheduleList);
         },
         deleteSchedule: (state, action) => {
             const scheduleItemId = action.payload;
             const indexFound = state.scheduleList.findIndex((item) => item?.id === scheduleItemId);
             state.scheduleList.splice(indexFound, 1);
+            // reLoadLocalStorage(state.scheduleList);
         },
     },
 });

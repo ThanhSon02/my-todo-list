@@ -2,20 +2,24 @@ import { format, isSameDay, isSameMonth, parseISO } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeScheduleItem, deleteSchedule, startEditingSchedule } from '../pages/SchedulePage/ScheduleReducer';
 import { useRef } from 'react';
-import { OptionIcon } from '../icons';
-import './ScheduleTimeLine.css';
+import { OptionIcon } from '../assets/icons';
 import { useNavigate } from 'react-router-dom';
+import './ScheduleTimeLine.css';
 
 function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
-    const scheduleList = useSelector((state) => state.schedule.scheduleList);
+    const scheduleListData = useSelector((state) => state.schedule.scheduleList);
+
     const dispatch = useDispatch();
     const listDateSchedule = useRef();
     const navigate = useNavigate();
-    let datas = scheduleList.filter((scheduleItem) =>
+
+    // lọc lịch trình có cùng tháng với tháng đang hiển thị
+    let datas = scheduleListData.filter((scheduleItem) =>
         isSameMonth(firstDayOfCurrentMonth, parseISO(scheduleItem.timeStart)),
     );
+
     return (
-        <div className='ml-2 px-5'>
+        <div className='ml-2 px-5 xl:px-[7rem]'>
             <h1 className='mb-8 font-bold'>Schedule</h1>
             {datas.length > 0 ? (
                 <div ref={listDateSchedule}>
@@ -62,7 +66,7 @@ function ScheduleTimeLine({ firstDayOfCurrentMonth }) {
                                                         <div
                                                             onClick={() => {
                                                                 dispatch(startEditingSchedule(data.id));
-                                                                navigate('/createSchedule');
+                                                                navigate('/schedule/createSchedule');
                                                             }}
                                                             className='hover:bg-slate-300 hover:text-black w-full h-1/3 cursor-default px-2'
                                                         >

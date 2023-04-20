@@ -3,30 +3,30 @@ import { useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import '../components/LayoutHeader.css';
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
-import { ScheduleIcon, NoteIcon } from '../icons';
+import { ScheduleIcon, NoteIcon } from '../assets/icons';
 
 function LayoutHeader() {
     const [checked, setChecked] = useState(true);
     const navigate = useNavigate();
 
     const handleNoteClick = () => {
-        navigate('/createNote');
+        navigate('/note/createNote');
     };
 
     const handleScheduleClick = () => {
-        navigate('/createSchedule');
+        navigate('/schedule/createSchedule');
     };
 
     return (
-        <main className='bg-scheduleBg min-h-screen text-white relative'>
+        <main className='bg-scheduleBg text-white relative min-h-screen'>
             <Header />
 
-            <div className='switch-wrapper flex justify-between items-center w-74.5 h-10 my-0 mx-auto bg-switchBtnBg rounded text-center p-1 relative'>
+            <div className='switch-wrapper flex justify-between items-center w-74.5 h-10 my-0 mx-auto bg-switchBtnBg rounded text-center p-1 relative xl:w-[408px]'>
                 <Link
                     onClick={() => setChecked(true)}
                     className={`${
                         checked ? 'schedule' : ''
-                    } togglePage select-none text-base font-semibold w-33.25 h-8 leading-8 z-10 cursor-pointer focus:outline-none`}
+                    } togglePage select-none text-base font-semibold w-33.25 h-8 leading-8 z-10 cursor-pointer focus:outline-none xl:w-[188px]`}
                     checked
                     to={'/schedule'}
                 >
@@ -36,12 +36,12 @@ function LayoutHeader() {
                     onClick={() => setChecked(false)}
                     className={`${
                         checked ? '' : 'note'
-                    } togglePage select-none text-base font-semibold w-33.25 h-8 leading-8 z-10 cursor-pointer focus:outline-none`}
+                    } togglePage select-none text-base font-semibold w-33.25 h-8 leading-8 z-10 cursor-pointer focus:outline-none xl:w-[188px]`}
                     to={'/note'}
                 >
                     Note
                 </Link>
-                <span className='highlighter bg-switchBtn rounded absolute w-33.25 h-8 left-1 top-1'></span>
+                <span className='highlighter bg-switchBtn rounded absolute w-33.25 h-8 left-1 top-1 xl:w-[188px]'></span>
             </div>
 
             <Outlet context={[checked, setChecked]}></Outlet>

@@ -6,25 +6,25 @@ const initialState = {
     noteList: [
         {
             id: 'vnewo',
-            title: 'need for this month',
+            title: "this morning's meeting, we have to improve the quality of office facilities and another...",
             date: '2023-04-22',
             pin: true,
         },
         {
             id: 'nfk',
-            title: 'need for this month',
+            title: 'need for this month:-clothes-snack...',
             date: '2023-04-17',
             pin: true,
         },
         {
             id: 'ncewn',
-            title: 'need for this month',
+            title: "Message from Liam:Don't forget to complete assignments on Tuesday",
             date: '2023-04-30',
             pin: true,
         },
         {
             id: 'fpeo',
-            title: 'need for this month',
+            title: 'need for this week',
             date: '2023-04-26',
             pin: false,
         },
@@ -46,6 +46,12 @@ const sortItem = (state) => {
 
 sortItem(initialState.noteList);
 
+const reLoadLocalStorage = (data) => {
+    const currentData = JSON.parse(window.localStorage.getItem('AppData'));
+
+    window.localStorage.setItem('AppData', JSON.stringify({ ...currentData, noteList: data }));
+};
+
 export const NoteReducer = createSlice({
     name: 'note',
     initialState,
@@ -55,6 +61,7 @@ export const NoteReducer = createSlice({
                 const newNoteItem = action.payload;
                 state.noteList.push(newNoteItem);
                 sortItem(state.noteList);
+                reLoadLocalStorage(state.noteList);
             },
             prepare: (newNoteItem) => ({
                 payload: { ...newNoteItem, id: nanoid() },
@@ -64,6 +71,7 @@ export const NoteReducer = createSlice({
             const noteId = action.payload;
             const indexFound = state.noteList.findIndex((noteItem) => noteItem?.id === noteId);
             state.noteList.splice(indexFound, 1);
+            reLoadLocalStorage(state.noteList);
         },
         startEditingNote: (state, action) => {
             const noteId = action.payload;
@@ -80,6 +88,8 @@ export const NoteReducer = createSlice({
                 return false;
             });
             sortItem(state.noteList);
+            state.editingNote = null;
+            reLoadLocalStorage(state.noteList);
         },
     },
 });

@@ -10,6 +10,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import router from './router';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
     <Provider store={store}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
